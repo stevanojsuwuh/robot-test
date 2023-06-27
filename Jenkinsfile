@@ -1,19 +1,12 @@
 pipeline {
-    agent any
-    environment {
-        containerName = 'stevanoswh/robot-framework-1:latest'
-        scmUrl = 'https://github.com/stevanojsuwuh/robot-test.git'
-        branch = 'master'
-        imageName = 'robot-framework-1'
+    agent {
+        docker {
+            image 'stevanoswh/robot-framework-1:latest'
+            args '--entrypoint=""'
+        }
     }
     stages {
         stage('Robot Framework') {
-            agent {
-                dockerContainer {
-                    image 'stevanoswh/robot-framework-1:latest'
-                    args '--entrypoint=""'
-                }
-            }
             steps {
                 sh 'robot --outputdir reports app/basicChecks.robot'
             }
@@ -21,8 +14,7 @@ pipeline {
     }
     post {
         always {
-            step([
-                $class: 'RobotPublisher',
+            robotPublisher(
                 outputPath: 'reports',
                 outputFileName: 'output.xml',
                 reportFileName: 'report.html',
@@ -31,7 +23,7 @@ pipeline {
                 passThreshold: 95.0,
                 unstableThreshold: 90.0,
                 otherFiles: "**/*.png,**/*.jpg"
-            ])
+            )
         }
     }
 }
