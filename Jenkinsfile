@@ -1,9 +1,15 @@
 pipeline{
 	agent any
+	environment {
+    	containerName = 'stevanoswh/robot-framework-1:latest'
+    	scmUrl = 'https://github.com/stevanojsuwuh/robot-test.git'
+    	branch = 'master'
+    	imageName = 'robot-framework-1'
+	}
 	stages{
         stage('Robot Framework') {
         agent {
-            dockerContainer {
+            docker {
                 image 'stevanoswh/robot-framework-1:latest'
                 args '--entrypoint=""'
             }
