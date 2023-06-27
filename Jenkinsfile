@@ -1,7 +1,10 @@
- stage('Robot Framework') {
+pipeline{
+	agent any
+	stages{
+        stage('Robot Framework') {
         agent {
             docker {
-                image 'stevanoswhpush/robot-framework-1:latest'
+                image 'jutionck/robot-framework-1:latest'
                 args '--entrypoint=""'
             }
         }
@@ -26,3 +29,5 @@
             )
         }
     }
+	}
+}
