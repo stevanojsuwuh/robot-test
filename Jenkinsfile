@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Robot Framework') {
             agent {
-                docker {
+                dockerContainer {
                     image 'stevanoswh/robot-framework-1:latest'
                     args '--entrypoint=""'
                 }
