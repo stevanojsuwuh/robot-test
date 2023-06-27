@@ -4,7 +4,7 @@ pipeline{
         stage('Robot Framework') {
         agent {
             docker {
-                image 'jutionck/robot-framework-1:latest'
+                image 'stevanoswh/robot-framework-1:latest'
                 args '--entrypoint=""'
             }
         }
